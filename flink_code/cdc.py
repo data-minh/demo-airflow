@@ -5,7 +5,7 @@ import socket
 
 # Create streaming environment
 env = StreamExecutionEnvironment.get_execution_environment()
-env.enable_checkpointing(6000)
+env.enable_checkpointing(60000)
 
 settings = EnvironmentSettings.new_instance() \
     .in_streaming_mode() \
