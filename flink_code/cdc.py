@@ -54,7 +54,7 @@ def create_ref_catalog(catalog_name, s3_address):
     print(f"Created catalog: {catalog_name}")
 
 # Get address of Minio
-s3_address = get_container_ip("deployment-minio-0.minio-service.anhtq-minio.svc.cluster.local")
+s3_address = get_container_ip("minio-service.anhtq-minio.svc.cluster.local")
 
 #######################################################################
 # Create CATALOG
