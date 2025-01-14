@@ -76,7 +76,7 @@ src_ddl = """
         op STRING
     ) WITH (
         'connector' = 'kafka',
-        'topic' = 'cdc.public.demo',
+        'topic' = 'postgres.public.demo',
         'properties.bootstrap.servers' = 'broker-incluster:29092',
         'properties.group.id' = 'flink_connector',
         'scan.startup.mode'='earliest-offset',
