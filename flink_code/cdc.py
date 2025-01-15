@@ -5,7 +5,7 @@ import socket
 
 # Create streaming environment
 env = StreamExecutionEnvironment.get_execution_environment()
-env.enable_checkpointing(60000)
+env.enable_checkpointing(6000)
 
 settings = EnvironmentSettings.new_instance() \
     .in_streaming_mode() \
@@ -78,7 +78,7 @@ src_ddl = """
         'connector' = 'kafka',
         'topic' = 'postgres.public.demo',
         'properties.bootstrap.servers' = 'broker-incluster:29092',
-        'properties.group.id' = 'flink_connector',
+        'properties.group.id' = 'group-offsets',
         'scan.startup.mode' = 'earliest-offset',
         'format' = 'json'
     )
