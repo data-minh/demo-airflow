@@ -79,7 +79,7 @@ src_ddl = """
         'topic' = 'postgres.public.demo',
         'properties.bootstrap.servers' = 'broker-incluster:29092',
         'properties.group.id' = 'flink_connector',
-        'scan.startup.mode' = 'latest-offset',
+        'scan.startup.mode' = 'group-offsets',
         'format' = 'json'
     )
 """
