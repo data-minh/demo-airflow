@@ -79,10 +79,11 @@ src_ddl = """
         'topic' = 'postgres.public.demo',
         'properties.bootstrap.servers' = 'broker-incluster:29092',
         'properties.group.id' = 'flink_connector',
-        'scan.startup.mode' = 'group-offsets',
+        'scan.startup.mode' = 'earliest-offset',
         'format' = 'json'
     )
 """
+#earliest-offset, group-offsets
 table_env.execute_sql(src_ddl)
 print("Created CDC Kafka Source Table")
 
