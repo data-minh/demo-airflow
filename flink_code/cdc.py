@@ -5,7 +5,7 @@ import socket
 
 # Create streaming environment
 env = StreamExecutionEnvironment.get_execution_environment()
-env.enable_checkpointing(6000)
+env.enable_checkpointing(3000)
 
 settings = EnvironmentSettings.new_instance() \
     .in_streaming_mode() \
@@ -79,7 +79,7 @@ src_ddl = """
         'topic' = 'postgres.public.demo',
         'properties.bootstrap.servers' = 'broker-incluster:29092',
         'properties.group.id' = 'flink-group',
-        'scan.startup.mode' = 'earliest-offset',
+        'scan.startup.mode' = 'group-offsets',
         'format' = 'json'
     )
 """
