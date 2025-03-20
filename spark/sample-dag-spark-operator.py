@@ -21,8 +21,9 @@ with DAG(
 
     n_spark_pi = SparkKubernetesOperator(
         task_id='n-spark-pi',
-        namespace='pm-airflow',
+        namespace='pm-spark',
         application_file='sample-spark-pi.yaml',
         kubernetes_conn_id='k8s',
         do_xcom_push=False,
+        delete_on_termination=True
     )
