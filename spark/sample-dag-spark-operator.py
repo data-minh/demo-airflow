@@ -16,7 +16,7 @@ with DAG(
     schedule_interval=None,
     start_date=datetime(2025, 3, 20),
     catchup=False,
-    template_searchpath='/opt/airflow/dags/repo/spark',
+    template_searchpath='/opt/airflow/dags/repo/spark/job',
 ) as dag:
 
     n_spark_pi_scala = SparkKubernetesOperator(
