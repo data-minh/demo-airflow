@@ -1,31 +1,47 @@
-from airflow import DAG
 from datetime import timedelta, datetime
-from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import SparkKubernetesOperator
-from airflow.providers.cncf.kubernetes.sensors.spark_kubernetes import SparkKubernetesSensor
-from airflow.models import Variable
-from kubernetes.client import models as k8s
-from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
 
-default_args={
-   'depends_on_past': False,
-   'email': ['abcd@gmail.com'],
-   'email_on_failure': False,
-   'email_on_retry': False
+# [START import_module]
+# The DAG object; we'll need this to instantiate a DAG
+from airflow import DAG
+# Operators; we need this to operate!
+from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import SparkKubernetesOperator
+from airflow.utils.dates import days_ago
+# [END import_module]
+
+# [START default_args]
+# These args will get passed on to each operator
+# You can override them on a per-task basis during operator initialization
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'start_date': days_ago(1),
+    'email': ['airflow@example.com'],
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'max_active_runs': 1,
+    'retries': 0,
 }
+# [END default_args]
+
+# [START instantiate_dag]
+
 with DAG(
-    'sample-dag-spark-operator',
+    dag_id='spark_pi',
+    start_date=days_ago(1),
     default_args=default_args,
-    description='simple dag',
-    schedule_interval=timedelta(days=1),
-    start_date=datetime(2025, 3, 20),
-    catchup=False,
+    schedule=None,
     tags=['example'],
     template_searchpath='/opt/airflow/dags/repo/spark'
 ) as dag:
-    t1 = SparkKubernetesOperator(
-        task_id='n-spark-pi',
-        application_file='sample-spark-pi.yaml',
+    spark_pi_task = SparkKubernetesOperator(
+        task_id='spark_example',
         namespace='pm-spark',
+        # relative path to DAG file
+        # (1)
+        application_file='sample-spark-pi.yaml',
+        # (2)
         kubernetes_conn_id='k8s',
-        do_xcom_push=True,
+        # (3)
+        # do_xcom_push=True,
     )
+    spark_pi_task
