@@ -23,16 +23,14 @@ with DAG(
    catchup=False,
    tags=['example']
 ) as dag:
-   t1 = SparkKubernetesOperator(
-       task_id='n-spark-pi',
-       trigger_rule="all_success",
-       depends_on_past=False,
-       retries=3,
-       application_file="sample-spark-pi.yaml",
-       namespace="pm-spark",
-       kubernetes_conn_id="k8s",
-       api_group="sparkoperator.k8s.io",
-       api_version="v1beta2",
-       do_xcom_push=True,
-       dag=dag
-   )
+    t1 = SparkKubernetesOperator(
+        task_id='n-spark-pi',
+        trigger_rule="all_success",
+        depends_on_past=False,
+        retries=3,
+        application_file="sample-spark-pi.yaml",
+        namespace="pm-spark",
+        kubernetes_conn_id="k8s",
+        do_xcom_push=True,
+        dag=dag
+    )
