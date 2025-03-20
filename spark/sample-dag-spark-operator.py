@@ -25,7 +25,7 @@ with DAG(
         task_id='n-spark-pi',
         trigger_rule="all_success",
         depends_on_past=False,
-        application_file="/spark/sample-spark-pi.yaml",
+        application_file="sample-spark-pi.yaml",
         namespace="pm-spark",
         kubernetes_conn_id="k8s",
         do_xcom_push=True,
