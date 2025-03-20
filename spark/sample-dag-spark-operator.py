@@ -35,7 +35,7 @@ with DAG(
 ) as dag:
     spark_pi_task = SparkKubernetesOperator(
         task_id='spark_example',
-        namespace='pm-spark',
+        namespace='pm-airflow',
         # relative path to DAG file
         # (1)
         application_file='sample-spark-pi.yaml',
