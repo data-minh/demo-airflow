@@ -1,32 +1,28 @@
 from airflow import DAG
-from datetime import timedelta, datetime
 from airflow.providers.cncf.kubernetes.operators.spark_kubernetes import SparkKubernetesOperator
+from datetime import datetime
 
 default_args = {
-    'depends_on_past': False,
+    'owner': 'airflow',
     'email': ['abcd@gmail.com'],
     'email_on_failure': False,
-    'email_on_retry': False
+    'email_on_retry': False,
 }
 
 with DAG(
     'sample-dag-spark-operator',
     default_args=default_args,
-    description='simple dag',
-    schedule_interval=timedelta(days=1),
-    start_date=datetime(2022, 11, 17),
+    description='A sample DAG to run Spark on Kubernetes',
+    schedule_interval=None,
+    start_date=datetime(2025, 3, 20),
     catchup=False,
-    tags=['example'],
-    template_searchpath='/opt/airflow/dags/repo/spark'
+    template_searchpath='/opt/airflow/dags/repo/spark',
 ) as dag:
-    t1 = SparkKubernetesOperator(
+
+    n_spark_pi = SparkKubernetesOperator(
         task_id='n-spark-pi',
-        trigger_rule="all_success",
-        depends_on_past=False,
-        application_file="sample-spark-pi.yaml",
-        namespace="pm-spark",
-        kubernetes_conn_id="k8s",
-        do_xcom_push=True,
-        dag=dag
+        namespace='pm-airflow',
+        application_file='sample-spark-pi.yaml',
+        kubernetes_conn_id='k8s',
+        do_xcom_push=False,
     )
-    t1.template_ext = ()
