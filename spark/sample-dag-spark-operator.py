@@ -19,7 +19,8 @@ with DAG(
    schedule_interval=timedelta(days=1),
    start_date=datetime(2022, 11, 17),
    catchup=False,
-   tags=['example']
+   tags=['example'],
+   template_searchpath='/opt/airflow/dags/repo/spark'
 ) as dag:
     t1 = SparkKubernetesOperator(
         task_id='n-spark-pi',
