@@ -30,15 +30,14 @@ with DAG(
     start_date=days_ago(1),
     default_args=default_args,
     schedule=None,
-    tags=['example'],
-    template_searchpath='/opt/airflow/dags/repo/spark'
+    tags=['example']
 ) as dag:
     spark_pi_task = SparkKubernetesOperator(
         task_id='spark_example',
         namespace='pm-airflow',
         # relative path to DAG file
         # (1)
-        application_file='sample-spark-pi.yaml',
+        application_file='/opt/airflow/dags/repo/spark/sample-spark-pi.yaml',
         # (2)
         kubernetes_conn_id='k8s',
         # (3)
