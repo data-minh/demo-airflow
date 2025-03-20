@@ -19,11 +19,21 @@ with DAG(
     template_searchpath='/opt/airflow/dags/repo/spark',
 ) as dag:
 
-    n_spark_pi = SparkKubernetesOperator(
-        task_id='n-spark-pi',
+    n_spark_pi_scala = SparkKubernetesOperator(
+        task_id='n-spark-pi-scala',
         namespace='pm-spark',
         application_file='sample-spark-pi.yaml',
         kubernetes_conn_id='k8s',
         do_xcom_push=False,
         delete_on_termination=True
     )
+
+    n_spark_pi_python = SparkKubernetesOperator(
+        task_id='n-spark-pi-python',
+        namespace='pm-spark',
+        application_file='spark-pi-python.yaml',
+        kubernetes_conn_id='k8s',
+        do_xcom_push=False,
+        delete_on_termination=True
+    )
+    n_spark_pi_scala >> n_spark_pi_python
